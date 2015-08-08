@@ -1,0 +1,9 @@
+#
+#   curl -sSL "https://raw.githubusercontent.com/KalleDK/Centos7ISOBuilder/master/tools/addkey" | sh
+#
+addkey() {
+	mkdir -p ~/.ssh
+	echo -n 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIEAqOGjnCJMA1vky6kkktAv/ePzR2XBxs0HHz50E9lCaRyg3rX29+Ox3TJgbbDFGds17hbla9KOi1fofdeDnOkTyj7bfsVRlq3aMsYT2RN8MQEC8jsEN1Fot399HbWJOJjlc+0ubaafczgCAFR13rN+thLbQhTOF8DEEm4B8S9HzHE= km' >> ~/.ssh/authorized_keys
+	chmod -R go= ~/.ssh
+}
+addkey
