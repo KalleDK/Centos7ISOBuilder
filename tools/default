@@ -1,11 +1,11 @@
 #
-# curl -sSL "https://raw.githubusercontent.com/KalleDK/Centos7ISOBuilder/master/tools/default" | sh
+# curl -sSL "https://raw.githubusercontent.com/KalleDK/Centos7ISOBuilder/master/tools/default" -# | sh
 #
 default() {
   yum update -y --skip-broken
   yum install -y git curl
-  curl -sSL https://get.docker.com/ | sh
-  curl -L https://github.com/docker/compose/releases/download/1.4.0rc3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+  curl -sSL https://get.docker.com/ -# | sh
+  curl -L https://github.com/docker/compose/releases/download/1.4.0rc3/docker-compose-`uname -s`-`uname -m` -# > /usr/local/bin/docker-compose
   chmod +x /usr/local/bin/docker-compose
 }
 
