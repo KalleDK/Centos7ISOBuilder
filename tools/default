@@ -10,6 +10,8 @@ default() {
   service docker start
   chkconfig docker on
   usermod -aG docker km
+  curl -sSL "https://raw.githubusercontent.com/KalleDK/Centos7ISOBuilder/master/tools/ifup-local" > /sbin/ifup-local
+  chmod +x /sbin/ifup-local
 }
 
 default
