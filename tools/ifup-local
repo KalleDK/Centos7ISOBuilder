@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ "$1" = lo ]; then
+    exit 0
+fi
+
+if [ ! -e /etc/issue-standard ]; then
+  cp -f /etc/issue /etc/issue-standard
+fi
+
+cp -f /etc/issue-standard /etc/issue
+ip -o -4 addr show | awk -F '[ /]+' '{ printf "%-20s %s\n", $2, $4 }' >> /etc/issue
+echo "" >> /etc/issue
