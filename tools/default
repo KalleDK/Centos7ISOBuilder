@@ -1,17 +1,57 @@
 #
 # curl -sSL "https://raw.githubusercontent.com/KalleDK/Centos7ISOBuilder/master/tools/default" -# | sh
 #
-default() {
-  yum update -y --skip-broken
-  yum install -y git curl
-  curl -sSL https://get.docker.com/ -# | sh
+
+installDockerRepo() {
+  repo=${1-"main"}
+  lsb_dist==${2-"centos"}
+  dist_version==${3-"7"}
+  cat >/etc/yum.repos.d/docker-${repo}.repo <<-EOF
+  [docker-${repo}-repo]
+	name=Docker ${repo} Repository
+	baseurl=https://yum.dockerproject.org/repo/${repo}/${lsb_dist}/${dist_version}
+	enabled=1
+	gpgcheck=1
+	gpgkey=https://yum.dockerproject.org/gpg
+	EOF
+}
+
+installDockerCompose() {
   curl -L https://github.com/docker/compose/releases/download/1.4.0rc3/docker-compose-`uname -s`-`uname -m` -# > /usr/local/bin/docker-compose
   chmod +x /usr/local/bin/docker-compose
-  service docker start
-  chkconfig docker on
-  usermod -aG docker km
+}
+
+userExists() {
+  user=$1;
+  id ${user} &>/dev/null;
+  return $?
+}
+
+installShowIpIssue() {
   curl -sSL "https://raw.githubusercontent.com/KalleDK/Centos7ISOBuilder/master/tools/ifup-local" > /sbin/ifup-local
   chmod +x /sbin/ifup-local
+}
+
+default() {
+  installDockerRepo main centos 7
+  
+  yum update -y --skip-broken
+  yum install -y \
+    git \
+    curl \
+    docker-engine
+  
+  installDockerCompose
+  
+  service docker start
+  chkconfig docker on
+  
+  installShowIpIssue
+  
+  if userExists km; then
+    usermod -aG docker km
+  fi
+  
 }
 
 default
