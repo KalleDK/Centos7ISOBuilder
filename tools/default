@@ -4,8 +4,8 @@
 
 installDockerRepo() {
   repo=${1-"main"}
-  lsb_dist==${2-"centos"}
-  dist_version==${3-"7"}
+  lsb_dist=${2-"centos"}
+  dist_version=${3-"7"}
   cat >/etc/yum.repos.d/docker-${repo}.repo <<-EOF
   [docker-${repo}-repo]
 	name=Docker ${repo} Repository
