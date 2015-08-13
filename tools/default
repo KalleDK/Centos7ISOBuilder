@@ -39,6 +39,7 @@ default() {
 	yum install -y \
 		git \
 		curl \
+		docker-selinux \
 		docker-engine
   
 	installDockerCompose
